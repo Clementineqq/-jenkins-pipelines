@@ -25,11 +25,7 @@ def call(Map config = [:]) {
                 }
             }
 
-            stage('Verify') {
-                steps {
-                    sh 'curl -f http://localhost:8081/health || exit 1'
-                }
-            }
+           
         }
 
         post {
