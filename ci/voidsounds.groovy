@@ -1,6 +1,6 @@
 def call(Map config = [:]) {
-    def appName = config.appName ?: 'voidsounds'
-    def registry = config.registry ?: 'registry.example.com'
+    def appName = config.appName ?: 'Clemenineqq/voidsounds'
+    def registry = config.registry ?: 'ghcr.io'
 
     pipeline {
         agent { label 'docker' }
@@ -31,7 +31,7 @@ def call(Map config = [:]) {
                         registry: registry,
                         imageName: appName,
                         imageTag: env.IMAGE_TAG,
-                        credentialsId: 'docker-registry'
+                        credentialsId: 'github-registry'
                     )
                 }
             }
