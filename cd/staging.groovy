@@ -24,7 +24,7 @@ pipeline {
                                  docker pull ghcr.io/clementineqq/voidsounds:${IMAGE_TAG} && \\
                                  IMAGE_TAG=${IMAGE_TAG} docker compose -f docker-compose.staging.yml up -d"
                         '''
-                    }
+                    } //TODO: StrictHostKeyChecking=no потом исправить на knwon_hosts
                 }
             }
         }
