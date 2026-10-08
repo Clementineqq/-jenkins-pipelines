@@ -11,7 +11,7 @@ pipeline {
         stage('Deploy to staging') {
             steps {
                 withEnv(["IMAGE_TAG=${params.IMAGE_TAG}"]) {   // кладём тег в окружение
-                    sshagent(['vboxuser']) {                    // ID ключа из Credentials
+                    sshagent(['debian-vm-ssh']) {                    // ID ключа из Credentials
                         sh '''
                             set -e
                             ssh -o StrictHostKeyChecking=no vboxuser@192.168.56.101 \\
