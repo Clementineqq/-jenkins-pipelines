@@ -1,4 +1,5 @@
-@Library('jenkins-shared-lib@dev') _
+@Library('jenkins-shared-lib@v1.0.0') _
+
 
 pipeline {
     agent any  // деплой по SSH с контроллера, отдельная нода не требуется
