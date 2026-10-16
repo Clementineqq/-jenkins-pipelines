@@ -1,0 +1,5 @@
+# заглушка
+version: '3.8'
+services:
+  app:
+    image: placeholder
