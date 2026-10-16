@@ -32,7 +32,17 @@ pipeline {
                             scp -o StrictHostKeyChecking=no docker-compose.production.yml vboxuser@192.168.56.101:/home/vboxuser/voidsounds/
                             ssh -o StrictHostKeyChecking=no vboxuser@192.168.56.101 "cd /home/vboxuser/voidsounds && docker pull ${REGISTRY}/${APP_NAME}:${IMAGE_TAG} && IMAGE_TAG=\${IMAGE_TAG} DB_PASSWORD=\${DB_PASSWORD} SESSION_SECRET=\${SESSION_SECRET} docker compose -f docker-compose.production.yml up -d"
                             # ---------- ЭТАП 5: HEALTHCHECK ----------
-                            ssh -o StrictHostKeyChecking=no vboxuser@192.168.56.101 "for i in \$(seq 1 30); do if curl -sf http://localhost:8080/healthz; then echo 'Приложение здорово'; exit 0; fi; sleep 2; done; echo 'Приложение не отвечает на healthz — деплой не удался'; exit 1"
+                            ssh -o StrictHostKeyChecking=no vboxuser@192.168.56.101 'bash -s' <<'EOF'
+for i in $(seq 1 30); do
+    if curl -sf http://localhost:8080/healthz; then
+        echo 'Приложение здорово'
+        exit 0
+    fi
+    sleep 2
+done
+echo 'Приложение не отвечает на healthz — деплой не удался'
+exit 1
+EOF
                         '''
                     }
                 }
