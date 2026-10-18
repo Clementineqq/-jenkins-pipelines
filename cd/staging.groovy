@@ -16,11 +16,11 @@ pipeline {
                         sh '''
                             set -e
                             echo "=== Deploying to staging ==="
-                            ssh -o StrictHostKeyChecking=no vboxuser@192.168.56.101 "mkdir -p /home/vboxuser/voidsounds"
-                            scp -o StrictHostKeyChecking=no docker-compose.staging.yml vboxuser@192.168.56.101:/home/vboxuser/voidsounds/
-                            ssh -o StrictHostKeyChecking=no vboxuser@192.168.56.101 "cd /home/vboxuser/voidsounds && docker pull ghcr.io/clementineqq/voidsounds:${IMAGE_TAG} && IMAGE_TAG=\${IMAGE_TAG} docker compose -f docker-compose.staging.yml up -d"
+                            ssh vboxuser@192.168.56.101 "mkdir -p /home/vboxuser/voidsounds"
+                            scp docker-compose.staging.yml vboxuser@192.168.56.101:/home/vboxuser/voidsounds/
+                            ssh vboxuser@192.168.56.101 "cd /home/vboxuser/voidsounds && docker pull ghcr.io/clementineqq/voidsounds:${IMAGE_TAG} && IMAGE_TAG=\${IMAGE_TAG} docker compose -f docker-compose.staging.yml up -d"
                             # ---------- ЭТАП 5: HEALTHCHECK ----------
-                            ssh -o StrictHostKeyChecking=no vboxuser@192.168.56.101 'bash -s' <<'EOF'
+                            ssh vboxuser@192.168.56.101 'bash -s' <<'EOF'
 for i in $(seq 1 30); do
     if curl -sf http://localhost:8080/healthz; then
         echo 'Приложение здорово'
@@ -32,7 +32,7 @@ echo 'Приложение не отвечает на healthz — деплой �
 exit 1
 EOF
                         '''
-                    } //TODO: StrictHostKeyChecking=no потом исправить на known_hosts
+                    } 
                 }
             }
         }
