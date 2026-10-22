@@ -1,4 +1,4 @@
-@Library('jenkins-shared-lib@dev') _
+@Library('jenkins-shared-lib@v1.0.0') _
 
 pipeline {
     agent { label 'docker-build' } // запуск на агенте с docker и ssh-ключом, не на контроллере
