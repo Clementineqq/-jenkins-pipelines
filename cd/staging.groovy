@@ -2,7 +2,7 @@
 
 
 pipeline {
-    agent any // деплой по SSH с контроллера, отдельная нода не требуется
+    agent { label 'docker-build' }
 
     parameters {
         string(name: 'IMAGE_TAG', description: 'Тег образа для деплоя (SHA коммита)')
